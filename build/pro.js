@@ -9,27 +9,40 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
     mode: 'none',
     entry: {
-        index: './src/index.js',
-        loadVendor: './src/loadVendor.js'
+        index: ['./src/index.js', './src/b/b.js']
     },
     output: {
         path: path.resolve(__dirname, "../dist"),
         chunkFilename: '[name]_[chunkhash].bundle.js',
         filename: '[name]_[chunkhash].js'
     },
-    externals: ['jquery', 'lodash'],
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.ejs',
             filename: 'index.html',
             inject: 'body',
             chunks: [
-                'loadVendor',
+                'vendors',
                 'index'
             ],
             aaa: 1
         }),
         new webpack.NamedModulesPlugin(),
         new BundleAnalyzerPlugin()
-    ]
+    ],
+    optimization: {
+        splitChunks: {
+            // test (chunks) {
+            //     console.log(chunks);
+            //     return true;
+            // },
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
+            }
+        }
+    }
 };
