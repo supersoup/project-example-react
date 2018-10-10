@@ -2,6 +2,7 @@ import utilFn from '../util/util1'
 import utilFn3 from '../util/util3'
 import _ from 'lodash';
 import $ from 'jquery';
+import './b.css'
 
 export default function () {
     console.log(_);

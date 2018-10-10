@@ -1,0 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.h1 {
+    color: cornflowerblue;
+    background-image: url(./image/tomato.png);
+}

@@ -4,6 +4,7 @@
 import utilFn from '../util/util1'
 import _ from 'lodash';
 import c from '../c/c'
+import './a.css'
 
 export default function(text) {
     const moduleName = 'b';
