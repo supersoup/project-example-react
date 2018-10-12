@@ -8,8 +8,17 @@ import './a.css'
 
 export default function(text) {
     const moduleName = 'b';
-    utilFn();
-    c();
+    var pro = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve(1)
+        }, 1000)
+    });
+    
+    pro.then(function () {
+        utilFn();
+        c();
+    });
+    
     console.log(_);
     console.log(text);
     import('../b/' + moduleName).then(function (fnB) {
