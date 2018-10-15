@@ -8,6 +8,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     mode: 'none',
@@ -34,8 +35,9 @@ module.exports = {
         }, {
             test: /\.(png|svg|jpg|gif)$/,
             use: [{
-                loader: 'file-loader',
+                loader: 'url-loader',
                 options: {
+                    limit: 1024,
                     name: '[name]_[hash].[ext]',
                     outputPath: 'image'
                 }
@@ -73,7 +75,7 @@ module.exports = {
             aaa: 1
         }),
         new webpack.NamedModulesPlugin(),
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
         new ExtractTextPlugin({
             filename: '[name]_[chunkhash].css',
             allChunks: true
@@ -81,7 +83,8 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             'process.env.DEBUG': JSON.stringify(process.env.DEBUG)
-        })
+        }),
+        new UglifyJsPlugin()
     ],
     optimization: {
         splitChunks: {
@@ -93,5 +96,13 @@ module.exports = {
                 }
             }
         }
-    }
+    },
+    devServer: {
+        proxy: { // proxy URLs to backend development server
+            '/api': 'http://localhost:9021'
+        },
+        compress: true,
+        port: 9020,
+        hotOnly: false
+    },
 };
