@@ -1,7 +1,8 @@
 export default function () {
 	var pro = new Promise(function (resolve) {
+		console.log('ccc1');
 		setTimeout(function () {
-			resolve('aaa')
+			resolve('ccc2')
 		}, 1000)
 	});
 	
@@ -9,6 +10,8 @@ export default function () {
 		var a = await pro;
 		console.log(a);
 	}
+	
+	asFn();
 	
 	console.log('c.js');
 }

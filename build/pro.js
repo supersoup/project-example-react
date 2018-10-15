@@ -12,14 +12,18 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 module.exports = {
     mode: 'none',
     entry: {
-        index: ['./src/index.js', './src/b/b.js']
+        index: [
+            'babel-polyfill',
+            './src/index.js',
+            './src/b/b.js'
+        ]
     },
     output: {
         path: path.resolve(__dirname, "../dist"),
         chunkFilename: '[name]_[chunkhash].bundle.js',
         filename: '[name]_[chunkhash].js'
     },
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     module: {
         rules: [{
             test: /\.css$/,
@@ -43,10 +47,10 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                     presets: [
-                        'env',
+                        ['env'],
                         'react',
-                        'stage-0'
-                    ],
+                        ['stage-0']
+                    ]
                 }
             }]
         }]
@@ -62,6 +66,7 @@ module.exports = {
             filename: 'index.html',
             inject: 'body',
             chunks: [
+                'polyfill',
                 'vendors',
                 'index'
             ],
